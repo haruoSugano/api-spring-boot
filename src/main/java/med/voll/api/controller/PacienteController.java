@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import med.voll.api.paciente.dto.DadosAtualizarPaciente;
 import med.voll.api.paciente.dto.DadosCadastroPaciente;
 import med.voll.api.paciente.dto.DadosListagemPaciente;
 import med.voll.api.paciente.Paciente;
@@ -27,7 +28,21 @@ public class PacienteController {
     @GetMapping
     public Page<DadosListagemPaciente> listar(@PageableDefault(size = 10) Pageable paginacao) {
         return pacienteRepository
-                .findAll(paginacao)
+                .findAllByAtivoTrue(paginacao)
                 .map(DadosListagemPaciente::new);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void inativar(@PathVariable Long id) {
+        var paciente = pacienteRepository.getReferenceById(id);
+        paciente.desativar(id);
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody DadosAtualizarPaciente $dadosPaciente) {
+        var paciente = pacienteRepository.getReferenceById($dadosPaciente.id());
+        paciente.atualizarInformacoes($dadosPaciente);
     }
 }
