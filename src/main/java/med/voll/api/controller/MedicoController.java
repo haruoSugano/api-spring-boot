@@ -1,6 +1,10 @@
 package med.voll.api.controller;
 
 import med.voll.api.medico.*;
+import med.voll.api.medico.dto.DadosAtualizarMedico;
+import med.voll.api.medico.dto.DadosCadastroMedico;
+import med.voll.api.medico.dto.DadosListagemMedico;
+import med.voll.api.medico.repository.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
